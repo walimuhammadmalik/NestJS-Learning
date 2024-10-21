@@ -6,36 +6,66 @@ import {
   Put,
   Delete,
   Body,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { HerosService } from './heros.service';
 
 @Controller('heros')
 export class HerosController {
-  heroModel: any;
   constructor(private herosService: HerosService) {}
 
   @Get('')
-  getHeros() {
-    return this.herosService.getHeros();
+  async getHeros() {
+    try {
+      return await this.herosService.getHeros();
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':id')
-  getHero(@Param('id') id) {
-    return this.herosService.getHero(id);
+  async getHero(@Param('id') id) {
+    try {
+      return await this.herosService.getHero(id);
+    } catch (error) {
+      if (error.name === 'NotFoundException') {
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      }
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Post('')
-  createHero(@Body() hero) {
-    return this.herosService.createHero(hero);
+  async createHero(@Body() hero) {
+    try {
+      return await this.herosService.createHero(hero);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Put(':id')
-  updateHero(@Param('id') id, @Body() hero) {
-    return this.herosService.updateHero(id, hero);
+  async updateHero(@Param('id') id, @Body() hero) {
+    try {
+      return await this.herosService.updateHero(id, hero);
+    } catch (error) {
+      if (error.name === 'NotFoundException') {
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      }
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
   
   @Delete(':id')
-  deleteHero(@Param('id') id) {
-    return this.herosService.deleteHero(id);
+  async deleteHero(@Param('id') id) {
+    try {
+      return await this.herosService.deleteHero(id);
+    } catch (error) {
+      if (error.name === 'NotFoundException') {
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      }
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
