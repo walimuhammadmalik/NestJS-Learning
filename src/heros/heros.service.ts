@@ -73,4 +73,71 @@ export class HerosService {
       throw new Error(`Failed to delete hero: ${error.message}`);
     }
   }
+
+  async getHerosByMinAge(minAge: number) {
+    try {
+      const heros = await this.heroModel.find({ age: { $gte: minAge } });
+      return heros;
+    } catch (error) {
+      throw new Error(
+        `Failed to fetch heroes by minimum age: ${error.message}`,
+      );
+    }
+  }
+
+  async getHerosByAgeRange(minAge: number, maxAge: number) {
+    try {
+      const heroes = await this.heroModel.find({
+        age: { $gte: minAge, $lte: maxAge },
+      });
+      return heroes;
+    } catch (error) {
+      throw new Error(`Failed to fetch heroes by age range: ${error.message}`);
+    }
+  }
+  async searchHeroByRealName(realName: string) {
+    try {
+      const heroes = await this.heroModel.find({
+        realName: { $regex: realName, $options: 'i' },
+      });
+      return heroes;
+    } catch (error) {
+      throw new Error(`Failed to search heroes by real name: ${error.message}`);
+    }
+  }
+
+  async searchHeros(params: {
+    name?: string;
+    realName?: string;
+    minAge?: number;
+    maxAge?: number;
+    age?: number;
+  }) {
+    try {
+      const query: any = {};
+
+      if (params.name) {
+        query.name = { $regex: params.name, $options: 'i' };
+      }
+      if (params.realName) {
+        query.realName = { $regex: params.realName, $options: 'i' };
+      }
+      if (params.age !== undefined) {
+        query.age = params.age;
+      } else if (params.minAge !== undefined || params.maxAge !== undefined) {
+        query.age = {};
+        if (params.minAge !== undefined) {
+          query.age.$gte = params.minAge;
+        }
+        if (params.maxAge !== undefined) {
+          query.age.$lte = params.maxAge;
+        }
+      }
+
+      const heroes = await this.heroModel.find(query);
+      return heroes;
+    } catch (error) {
+      throw new Error(`Failed to search heroes: ${error.message}`);
+    }
+  }
 }

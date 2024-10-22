@@ -8,6 +8,8 @@ export default class Hero {
   realName: string;
   @Prop()
   isAvenger: boolean;
+  @Prop()
+  age: number;
 }
 
 export const HeroSchema = SchemaFactory.createForClass(Hero);
