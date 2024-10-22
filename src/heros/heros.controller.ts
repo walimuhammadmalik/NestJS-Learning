@@ -129,7 +129,6 @@ export class HerosController {
   async deleteHero(@Param('id') id) {
     try {
       return await this.herosService.deleteHero(id);
-      //ok
     } catch (error) {
       if (error.name === 'NotFoundException') {
         throw new HttpException(error.message, HttpStatus.NOT_FOUND);
