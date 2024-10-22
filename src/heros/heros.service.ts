@@ -102,6 +102,7 @@ export class HerosService {
       });
       return heroes;
     } catch (error) {
+      //ok
       throw new Error(`Failed to search heroes by real name: ${error.message}`);
     }
   }
