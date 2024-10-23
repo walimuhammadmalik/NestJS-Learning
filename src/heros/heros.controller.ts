@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { HerosService } from './heros.service';
 import { Types } from 'mongoose';
+import { CreateHeroDto } from './dtos/create-hero.dto';
 
 @Controller('heros')
 export class HerosController {
@@ -105,7 +106,7 @@ export class HerosController {
   }
 
   @Post('')
-  async createHero(@Body() hero) {
+  async createHero(@Body() hero: CreateHeroDto) {
     try {
       return await this.herosService.createHero(hero);
     } catch (error) {
@@ -114,7 +115,7 @@ export class HerosController {
   }
 
   @Put(':id')
-  async updateHero(@Param('id') id, @Body() hero) {
+  async updateHero(@Param('id') id, @Body() hero: CreateHeroDto) {
     try {
       return await this.herosService.updateHero(id, hero);
     } catch (error) {

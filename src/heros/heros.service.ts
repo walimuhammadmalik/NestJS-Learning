@@ -35,6 +35,14 @@ export class HerosService {
 
   async createHero(heroDetails) {
     try {
+      //user email already exists
+
+      const heroExists = await this.heroModel.findOne({
+        email: heroDetails.email,
+      });
+      if (heroExists) {
+        throw new Error('email already exists');
+      }
       const hero = await this.heroModel.create(heroDetails);
       return hero;
     } catch (error) {

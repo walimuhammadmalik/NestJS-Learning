@@ -7,6 +7,8 @@ export default class Hero {
   @Prop()
   realName: string;
   @Prop()
+  email: string;
+  @Prop()
   isAvenger: boolean;
   @Prop()
   age: number;
