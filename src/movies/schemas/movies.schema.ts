@@ -8,6 +8,8 @@ export default class Movie {
   heroName: string;
   @Prop()
   modiveDesc: string;
+  Prop()
+  modiveDate: string;
 }
 
 export const AdminSchema = SchemaFactory.createForClass(Movie);
