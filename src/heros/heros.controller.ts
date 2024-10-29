@@ -14,7 +14,7 @@ import { HerosService } from './heros.service';
 import { Types } from 'mongoose';
 import { CreateHeroDto } from './dtos/create-hero.dto';
 
-@Controller('heros')
+@Controller('heros')// heros routes
 export class HerosController {
   constructor(private herosService: HerosService) {}
 
