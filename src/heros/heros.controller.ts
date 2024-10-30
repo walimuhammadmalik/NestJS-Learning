@@ -210,6 +210,24 @@ export class HerosController {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+  
+  //get only name
+  @Get('name/:name')
+  async searchHeroByName(@Param('name') name: string) {
+    try {
+      if (!name || name.trim() === '') {
+        throw new HttpException(
+          'Name parameter is required',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      return await this.herosService.searchHeroByName(name);
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
 }

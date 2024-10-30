@@ -148,4 +148,16 @@ export class HerosService {
       throw new Error(`Failed to search heroes: ${error.message}`);
     }
   }
+
+  async searchHeroByName(name: string) {
+    try {
+      const heroes = await this.heroModel.find({
+        name: { $regex: name, $options: 'i' },
+      });
+      return heroes;
+    }
+    catch (error) {
+      throw new Error(`Failed to search heroes by name: ${error.message}`);
+    }
+  }
 }
