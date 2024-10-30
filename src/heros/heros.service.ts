@@ -7,7 +7,7 @@ import Hero from './schemas/hero.shema';
 export class HerosService {
   constructor(
     @InjectModel(Hero.name) private readonly heroModel: mongoose.Model<Hero>,
-  ) {}
+  ) { }
 
   async getHeros() {
     try {

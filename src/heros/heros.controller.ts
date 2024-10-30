@@ -16,7 +16,7 @@ import { CreateHeroDto } from './dtos/create-hero.dto';
 
 @Controller('heros')// heros routes
 export class HerosController {
-  constructor(private herosService: HerosService) {}
+  constructor(private herosService: HerosService) { }
 
   @Get('')
   async getHeros() {
@@ -210,4 +210,6 @@ export class HerosController {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+
 }
