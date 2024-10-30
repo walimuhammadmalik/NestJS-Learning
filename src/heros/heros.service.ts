@@ -7,7 +7,7 @@ import Hero from './schemas/hero.shema';
 export class HerosService {
   constructor(
     @InjectModel(Hero.name) private readonly heroModel: mongoose.Model<Hero>,
-  ) {}
+  ) { }
 
   async getHeros() {
     try {
@@ -146,6 +146,18 @@ export class HerosService {
       return heroes;
     } catch (error) {
       throw new Error(`Failed to search heroes: ${error.message}`);
+    }
+  }
+
+  async searchHeroByName(name: string) {
+    try {
+      const heroes = await this.heroModel.find({
+        name: { $regex: name, $options: 'i' },
+      });
+      return heroes;
+    }
+    catch (error) {
+      throw new Error(`Failed to search heroes by name: ${error.message}`);
     }
   }
 }
