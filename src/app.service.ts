@@ -9,5 +9,12 @@ export class AppService {
     return {
       message: 'This is a simple API built with NestJS and About IR Solutions',
     };
+
+  }
+  getModule() {
+    return {
+      message: 'This is a simple API built with NestJS and App Module',
+    };
+
   }
 }
